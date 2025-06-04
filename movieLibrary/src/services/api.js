@@ -3,8 +3,9 @@ const API_URL = "https://api.themoviedb.org/3";
 const API_URL_IMAGE = "https://image.tmdb.org/t/p/w500";
 const API_URL_SEARCH = `${API_URL}/search/movie?api_key=${API_KEY}&query=`; 
 
-export const getPopularMovies= async () => {
-    const response = await fetch(`${API_URL}/movie/popular?api_key=${API_KEY}`);
+export const getPopularMovies= async (pageNum) => {
+    console.log(`Fetching popular movies for page ${pageNum}`);
+    const response = await fetch(`${API_URL}/movie/popular?api_key=${API_KEY}&page=${pageNum}`);
     if (!response.ok) {
         throw new Error("Failed to fetch popular movies");
     }

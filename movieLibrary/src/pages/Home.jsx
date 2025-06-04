@@ -11,12 +11,19 @@ function Home(){
     const [movies, setMovies] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
 
 useEffect(() => {
   const loadPopularMovies = async () => {
     try {
-      const popularMovies = await getPopularMovies();
-      setMovies(popularMovies);
+      
+      const popularMovies = await getPopularMovies(page);
+      
+            setMovies(prev=>{
+              const existingIds = new Set(prev.map(m => m.id));
+              const newMovies = popularMovies.filter(m => !existingIds.has(m.id));
+              return [...prev,...newMovies]
+            });
     } catch (error) {
       console.error("Failed to fetch popular movies:", error);
       setError("Failed to fetch popular movies. Please try again later.");
@@ -26,7 +33,20 @@ useEffect(() => {
     }
   };
   loadPopularMovies();
-},[])
+},[page])
+useEffect(() => {
+  const handleScroll = () => {
+    if (
+      window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
+      !loading
+    ) {
+      setPage(prev => prev + 1);  // Trigger next page load
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, [loading]);
 function handleSearch(e) {  
     e.preventDefault();
     if (!searchQuery.trim()) {

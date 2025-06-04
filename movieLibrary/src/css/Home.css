@@ -64,3 +64,44 @@
   width: 100%;
   box-sizing: border-box;
 }
+/* For Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00c6ff, #0072ff);
+  border-radius: 8px;
+  border: 2px solid #f1f1f1;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00aaff, #0055ff);
+}
+/* Hide scrollbar for WebKit-based browsers (Chrome, Safari, Edge) */
+.scroll-container {
+  overflow-y: scroll;       /* Enable scrolling */
+  scrollbar-width: none;    /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+.scroll-container {
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 80vh; /* Set a maximum height for the container */
+  padding-right: 10px; /* Optional: add padding to avoid content touching the scrollbar */
+}
